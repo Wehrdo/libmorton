@@ -3,14 +3,14 @@
 #include <stdint.h>
 
 // Magicbits masks (encode)
-static uint_fast32_t magicbit3D_masks32_encode[6] = { 0x000003ff, 0, 0x30000ff, 0x0300f00f, 0x30c30c3, 0x9249249 }; // we add a 0 on position 1 in this array to use same code for 32-bit and 64-bit cases
-static uint_fast64_t magicbit3D_masks64_encode[6] = { 0x1fffff, 0x1f00000000ffff, 0x1f0000ff0000ff, 0x100f00f00f00f00f, 0x10c30c30c30c30c3, 0x1249249249249249 };
+__device__ __constant__ static uint_fast32_t magicbit3D_masks32_encode[6] = { 0x000003ff, 0, 0x30000ff, 0x0300f00f, 0x30c30c3, 0x9249249 }; // we add a 0 on position 1 in this array to use same code for 32-bit and 64-bit cases
+__device__ __constant__ static uint_fast64_t magicbit3D_masks64_encode[6] = { 0x1fffff, 0x1f00000000ffff, 0x1f0000ff0000ff, 0x100f00f00f00f00f, 0x10c30c30c30c30c3, 0x1249249249249249 };
 
-static uint_fast32_t magicbit3D_masks32_decode[6] = { 0, 0x000003ff, 0x30000ff, 0x0300f00f, 0x30c30c3, 0x9249249 }; // we add a 0 on position 0 in this array to use same code for 32-bit and 64-bit cases
-static uint_fast64_t magicbit3D_masks64_decode[6] = { 0x1fffff, 0x1f00000000ffff, 0x1f0000ff0000ff, 0x100f00f00f00f00f, 0x10c30c30c30c30c3, 0x1249249249249249 };
+__device__ __constant__ static uint_fast32_t magicbit3D_masks32_decode[6] = { 0, 0x000003ff, 0x30000ff, 0x0300f00f, 0x30c30c3, 0x9249249 }; // we add a 0 on position 0 in this array to use same code for 32-bit and 64-bit cases
+__device__ __constant__ static uint_fast64_t magicbit3D_masks64_decode[6] = { 0x1fffff, 0x1f00000000ffff, 0x1f0000ff0000ff, 0x100f00f00f00f00f, 0x10c30c30c30c30c3, 0x1249249249249249 };
 
 // Version with lookup table
-static const uint_fast32_t Morton3D_encode_x_256[256] =
+__device__ __constant__ static const uint_fast32_t Morton3D_encode_x_256[256] =
 {
 	0x00000000, 
 	0x00000001, 0x00000008, 0x00000009, 0x00000040, 0x00000041, 0x00000048, 0x00000049, 0x00000200, 
@@ -47,7 +47,7 @@ static const uint_fast32_t Morton3D_encode_x_256[256] =
 	0x00249201, 0x00249208, 0x00249209, 0x00249240, 0x00249241, 0x00249248, 0x00249249
 };
 
-static const uint_fast32_t Morton3D_encode_y_256[256] = {
+__device__ __constant__ static const uint_fast32_t Morton3D_encode_y_256[256] = {
 	0x00000000,
 	0x00000002, 0x00000010, 0x00000012, 0x00000080, 0x00000082, 0x00000090, 0x00000092, 0x00000400,
 	0x00000402, 0x00000410, 0x00000412, 0x00000480, 0x00000482, 0x00000490, 0x00000492, 0x00002000,
@@ -83,7 +83,7 @@ static const uint_fast32_t Morton3D_encode_y_256[256] = {
 	0x00492402, 0x00492410, 0x00492412, 0x00492480, 0x00492482, 0x00492490, 0x00492492
 };
 
-static const uint_fast32_t Morton3D_encode_z_256[256] = {
+__device__ __constant__ static const uint_fast32_t Morton3D_encode_z_256[256] = {
 	0x00000000,
 	0x00000004, 0x00000020, 0x00000024, 0x00000100, 0x00000104, 0x00000120, 0x00000124, 0x00000800,
 	0x00000804, 0x00000820, 0x00000824, 0x00000900, 0x00000904, 0x00000920, 0x00000924, 0x00004000,
@@ -119,7 +119,7 @@ static const uint_fast32_t Morton3D_encode_z_256[256] = {
 	0x00924804, 0x00924820, 0x00924824, 0x00924900, 0x00924904, 0x00924920, 0x00924924
 };
 
-static const uint_fast8_t Morton3D_decode_x_512[512] = {
+__device__ __constant__ static const uint_fast8_t Morton3D_decode_x_512[512] = {
 	0, 1, 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 2, 3,
 	0, 1, 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 2, 3,
 	0, 1, 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 2, 3,
@@ -154,7 +154,7 @@ static const uint_fast8_t Morton3D_decode_x_512[512] = {
 	4, 5, 4, 5, 4, 5, 4, 5, 6, 7, 6, 7, 6, 7, 6, 7
 };
 
-static const uint_fast8_t Morton3D_decode_y_512[512] = {
+__device__ __constant__ static const uint_fast8_t Morton3D_decode_y_512[512] = {
 	0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1,
 	2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 3,
 	0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1,
@@ -189,7 +189,7 @@ static const uint_fast8_t Morton3D_decode_y_512[512] = {
 	6, 6, 7, 7, 6, 6, 7, 7, 6, 6, 7, 7, 6, 6, 7, 7
 };
 
-static const uint_fast8_t Morton3D_decode_z_512[512] = {
+__device__ __constant__ static const uint_fast8_t Morton3D_decode_z_512[512] = {
 	0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
 	0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
 	2, 2, 2, 2, 3, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3, 3,

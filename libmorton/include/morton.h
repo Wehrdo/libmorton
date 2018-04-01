@@ -46,7 +46,7 @@ inline uint_fast64_t morton2D_64_encode(const uint_fast32_t x, const uint_fast32
 inline uint_fast32_t morton3D_32_encode(const uint_fast16_t x, const uint_fast16_t y, const uint_fast16_t z) {
 	return m3D_e_sLUT<uint_fast32_t, uint_fast16_t>(x, y, z);
 }
-inline uint_fast64_t morton3D_64_encode(const uint_fast32_t x, const uint_fast32_t y, const uint_fast32_t z) {
+__device__ __host__ inline uint_fast64_t morton3D_64_encode(const uint_fast32_t x, const uint_fast32_t y, const uint_fast32_t z) {
 	return m3D_e_sLUT<uint_fast64_t, uint_fast32_t>(x, y, z);
 }
 #endif
