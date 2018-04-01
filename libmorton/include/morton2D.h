@@ -11,7 +11,7 @@
 
 #define EIGHTBITMASK (morton) 0x000000FF
 
-using namespace std;
+// using namespace std;
 
 // Encode methods
 template<typename morton, typename coord> inline morton m2D_e_sLUT(const coord x, const coord y);

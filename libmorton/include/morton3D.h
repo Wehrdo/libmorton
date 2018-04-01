@@ -12,7 +12,7 @@
 #define EIGHTBITMASK (morton) 0x000000FF
 #define NINEBITMASK (morton) 0x000001FF
 
-using namespace std;
+// using namespace std;
 
 // AVAILABLE METHODS FOR ENCODING
 template<typename morton, typename coord> inline morton m3D_e_sLUT(const coord x, const coord y, const coord z);
